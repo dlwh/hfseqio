@@ -47,6 +47,7 @@ class HFVocabulary(seqio.Vocabulary):
     def __eq__(self, other):
         return isinstance(other, HFVocabulary) and self.tokenizer == other.tokenizer
 
+    @property
     def _base_vocab_size(self) -> int:
         return len(self.tokenizer)
 
