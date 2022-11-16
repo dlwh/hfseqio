@@ -19,20 +19,21 @@ class HFVocabulary(seqio.Vocabulary):
 
     def _decode(self, tokens: List[int]) -> str:
         return self.tokenizer.decode(tokens)
-
+    @property
     def eos_id(self) -> Optional[int]:
         return self.tokenizer.eos_token_id
 
     @property
     def pad_id(self) -> int:
         if self.use_eos_as_pad:
-            id = self.eos_id()
+            id = self.eos_id
         else:
             id = self.tokenizer.pad_token_id
         if id is None:
             raise ValueError("Tokenizer does not have a pad token")
         return id
 
+    @property
     def unk_id(self) -> Optional[int]:
         return self.tokenizer.unk_token_id
 
@@ -53,7 +54,7 @@ class HFVocabulary(seqio.Vocabulary):
 
     def _encode_tf(self, s: tf.Tensor) -> tf.Tensor:
         s = s.numpy().decode("utf-8")
-        return self.tokenizer.encode(s, add_special_tokens=False, return_tensors="tf")
+        return self.tokenizer.encode(s, add_special_tokens=False, return_tensors="tf")[0]
 
     def _decode_tf(self, ids: tf.Tensor) -> tf.Tensor:
         return self.tokenizer.decode(ids)
