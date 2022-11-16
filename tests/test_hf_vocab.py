@@ -47,5 +47,5 @@ def test_vocab():
     assert len(tokenizer) == vocab.vocab_size
     assert TEST_TOKENS == vocab.encode(TEST_STRING)
     assert TEST_STRING == vocab.decode(TEST_TOKENS)
-    assert TEST_TOKENS == tuple(vocab.encode_tf(TEST_STRING).numpy())
-    assert TEST_STRING == _decode_tf(vocab, TEST_TOKENS)
+    assert TEST_TOKENS == tuple(vocab.encode_tf(tf.constant(TEST_STRING)).numpy())
+    assert TEST_STRING == _decode_tf(vocab, tf.constant(TEST_TOKENS))
